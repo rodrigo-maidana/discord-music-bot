@@ -1,28 +1,26 @@
 import discord
 from discord.ext import commands
 
-# import all of the cogs
-from music_cog import music_cog
-from help_cog import help_cog
+from music_cog import MusicCommands
+from help_cog import HelpCommands
 
-my_secret = "MTEwOTE3MTY4MzE0MDU3NTI0Mg.GS7UdB.dckfs4qeDSiHwBpjmzpFUxEdeqnHPFTVuV6SLc"
-
+# Definir los intentos que necesita tu bot
 intents = discord.Intents.default()
 intents.message_content = True
 
 bot = commands.Bot(command_prefix='$', intents=intents)
 
-# remove the default help command so that we can write out own
-bot.remove_command('help')
+# Crea instancias de tus clases Cog
+music_cog = MusicCommands(bot)
+help_cog = HelpCommands(bot)
 
-# register the class with the bot
-bot.add_cog(help_cog(bot))
-bot.add_cog(music_cog(bot))
+# Agrega las instancias de las clases Cog a tu bot
+bot.add_cog(music_cog)
+bot.add_cog(help_cog)
 
 
 @bot.event
 async def on_ready():
-    print(f'Conexion realizada como: {bot.user}')
+    print(f'Conectado como: {bot.user}')
 
-# start the bot with our token
-bot.run(my_secret)
+bot.run('MTEwOTE3MTY4MzE0MDU3NTI0Mg.GYoY2-.gXppej6rAYIkI4kS_ckIpJqX7p3XJYSOhyKTjc')

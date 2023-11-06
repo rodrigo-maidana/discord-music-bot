@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 
 
-class help_cog(commands.Cog):
+class HelpCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.help_message = """
