@@ -1,8 +1,14 @@
 import discord
 from discord.ext import commands
 
+# import all of the cogs
 from music_cog import MusicCommands
 from help_cog import HelpCommands
+# import all of the cogs
+from music_cog import music_cog
+from help_cog import help_cog
+
+my_secret = "TOKEN"
 
 # Definir los intentos que necesita tu bot
 intents = discord.Intents.default()
@@ -23,4 +29,4 @@ bot.add_cog(help_cog)
 async def on_ready():
     print(f'Conectado como: {bot.user}')
 
-bot.run('MTEwOTE3MTY4MzE0MDU3NTI0Mg.GYoY2-.gXppej6rAYIkI4kS_ckIpJqX7p3XJYSOhyKTjc')
+bot.run(my_secret)
