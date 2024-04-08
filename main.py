@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import os
+import sys
 from config import DISCORD_BOT_TOKEN, COMMAND_PREFIX
 
 # Carga dinámica de cogs
