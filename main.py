@@ -1,32 +1,34 @@
 import discord
 from discord.ext import commands
+import os
+from config import DISCORD_BOT_TOKEN, COMMAND_PREFIX
 
-# import all of the cogs
-from music_cog import MusicCommands
-from help_cog import HelpCommands
-# import all of the cogs
-from music_cog import music_cog
-from help_cog import help_cog
+# Carga dinámica de cogs
+initial_extensions = [
+    'music_commands',  # Asegúrate de que el nombre del módulo coincida con tu archivo de comandos de música.
+]
 
-my_secret = "TOKEN"
+class MusicBot(commands.Bot):
+    def __init__(self, command_prefix, intents):
+        super().__init__(command_prefix, intents=intents)
+        
+        # Carga de todos los cogs al iniciar el bot
+        for extension in initial_extensions:
+            try:
+                self.load_extension(extension)
+            except Exception as e:
+                print(f'Error al cargar la extensión {extension}', file=sys.stderr)
+                print(e, file=sys.stderr)
 
-# Definir los intentos que necesita tu bot
+    async def on_ready(self):
+        # Este evento se ejecuta cuando el bot ha terminado su inicio y está listo para trabajar
+        print(f'Logged in as {self.user.name} - {self.user.id}\nVersion: {discord.__version__}')
+
+# Configura los intents según lo que necesites. Los intents son necesarios para recibir ciertos tipos de eventos.
 intents = discord.Intents.default()
-intents.message_content = True
 
-bot = commands.Bot(command_prefix='$', intents=intents)
+# Creación de una instancia de tu bot
+bot = MusicBot(command_prefix=COMMAND_PREFIX, intents=intents)
 
-# Crea instancias de tus clases Cog
-music_cog = MusicCommands(bot)
-help_cog = HelpCommands(bot)
-
-# Agrega las instancias de las clases Cog a tu bot
-bot.add_cog(music_cog)
-bot.add_cog(help_cog)
-
-
-@bot.event
-async def on_ready():
-    print(f'Conectado como: {bot.user}')
-
-bot.run(my_secret)
+# Ejecución del bot con el token de Discord
+bot.run(DISCORD_BOT_TOKEN)

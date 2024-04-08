@@ -1,2 +1,12 @@
-token.txt
-__pycache__
+# Ignorar archivo de configuración con credenciales
+config.py
+
+# Otros archivos y directorios comúnmente ignorados
+__pycache__/
+*.pyc
+.DS_Store
+.env
+
+# Directorios de entornos virtuales
+venv/
+env/
